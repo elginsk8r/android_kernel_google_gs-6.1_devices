@@ -15,7 +15,7 @@ package(
 
 label_flag(
     name = "kernel",
-    build_setting_default = "//common:kernel_aarch64",
+    build_setting_default = "//private/common:kernel_aarch64",
     visibility = [
         "//private/devices/google:__subpackages__",
         "//private/google-modules:__subpackages__",
@@ -81,5 +81,5 @@ filegroup(
 extracted_system_dlkm(
     name = "kernel_gki_modules",
     gki_modules = [paths.basename(m) for m in PIXEL_GKI_MODULES_LIST],
-    images = "//common:kernel_aarch64_images",
+    images = "//private/common:kernel_aarch64_images",
 )

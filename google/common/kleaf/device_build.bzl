@@ -120,12 +120,12 @@ def device_build(
     else:
         base_build_configs = [
             # do not sort
-            "//common:set_kernel_dir_build_config",
+            "//private/common:set_kernel_dir_build_config",
             "//private/devices/google/common/kleaf/files:build.config.common",
         ]
         base_kconfigs = []
-        base_kconfig_exts = ["//common:kernel_package_kconfig"]
-        base_defconfig_fragments = ["//common:kernel_package_defconfig_fragment"]
+        base_kconfig_exts = ["//private/common:kernel_package_kconfig"]
+        base_defconfig_fragments = ["//private/common:kernel_package_defconfig_fragment"]
         base_ext_modules = []
         base_ddk_uapi_headers = []
         base_vendor_ramdisk_modules_lists = []
@@ -196,7 +196,7 @@ def device_build(
     native.filegroup(
         name = target_kernel_sources,
         srcs = [
-            "//common:kernel_aarch64_sources",
+            "//private/common:kernel_aarch64_sources",
             target_kconfigs,
         ],
         visibility = ["//visibility:private"],
@@ -220,7 +220,7 @@ def device_build(
 
     select_file(
         name = target_kmi_symbol_list,
-        srcs = "//common:aarch64_additional_kmi_symbol_lists",
+        srcs = "//private/common:aarch64_additional_kmi_symbol_lists",
         subpath = "android/abi_gki_aarch64_pixel",
     )
 
@@ -230,7 +230,7 @@ def device_build(
         # dtbs must be in outs to be packed into vendor_kernel_boot.img
         outs = [".config"] + dtb_outs + dtbo_additional_outs,
         implicit_outs = dtbo_outs,
-        base_kernel = "//common:kernel_aarch64",
+        base_kernel = "//private/common:kernel_aarch64",
         build_config = target_build_config,
         dtstree = target_dtstree if need_dtstree else None,
         collect_unstripped_modules = True,
@@ -403,7 +403,7 @@ def device_build(
         name = target_kernel_images,
         kernel_modules_install = target_kernel_modules_install,
         kernel_build = target_kernel,
-        base_kernel_images = "//common:kernel_aarch64_images",
+        base_kernel_images = "//private/common:kernel_aarch64_images",
         build_initramfs = True,
         build_vendor_kernel_boot = build_vendor_kernel_boot,
         build_system_dlkm = build_system_dlkm,
@@ -430,7 +430,7 @@ def device_build(
 
     select_file(
         name = target_boot_image_selection,
-        srcs = "//common:kernel_aarch64_gki_artifacts",
+        srcs = "//private/common:kernel_aarch64_gki_artifacts",
         subpath = "boot-lz4.img",
         visibility = ["//visibility:private"],
     )
@@ -455,8 +455,8 @@ def device_build(
         target_merged_ddk_uapi_headers,
         target_cleaned_ddk_uapi_headers,
         target_merged_kernel_and_ddk_uapi_headers,
-        "//common:kernel_aarch64",
-        "//common:kernel_aarch64_headers",
+        "//private/common:kernel_aarch64",
+        "//private/common:kernel_aarch64_headers",
         "//private/devices/google/common:kernel_gki_modules",
     ]
 
